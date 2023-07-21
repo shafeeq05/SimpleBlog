@@ -40,8 +40,11 @@ Route::get('/article/delete/{id}',[App\Http\Controllers\HomeController::class,'d
 Route::get('/tags/{id?}',[App\Http\Controllers\TandC::class,'getTag']);
 
 Route::get('/category',[App\Http\Controllers\TandC::class,'getCat']);
-Route::post('/tags/{id?}',[App\Http\Controllers\TandC::class,'getTag']);
+Route::post('/tags/{id?}',[App\Http\Controllers\TandC::class,'postTag']);
 
-Route::post('/category/{id?}',[App\Http\Controllers\TandC::class,'getCat']);
+Route::post('/category/{id?}',[App\Http\Controllers\TandC::class,'postCat']);
 
+Route::get('/alltags',[App\Http\Controllers\TandC::class,'allTags']);
+
+Route::get('/tags/{id?}',[App\Http\Controllers\TandC::class,'delete']);
 

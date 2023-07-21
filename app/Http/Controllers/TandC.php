@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tags;
 use App\Models\Articles;
+use App\Models\Categories;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -10,8 +12,8 @@ class TandC extends Controller
 {
     public static function getTag($id=null){
 
-
-        return view("Tag&control.tag");
+        $tag = Tags::find($id);
+        return view("Tag&control.tag")->with('data',$tag);
 
     }
     public static function getCat($id=null){
@@ -21,35 +23,38 @@ class TandC extends Controller
     public static function postTag(Request $request, $id=null){
 
         $tag = $request->all();
-        dd($tag);
+        // dd($tag);
         $validator = Validator::make($tag, [
             'name' => 'required|string|max:255',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        unset($tag['_tocken']);
-        $articles = Articles::updateOrCreate(["id"=>$id],$tag);
+
+        $articles = Tags::updateOrCreate(["id"=>$id],$tag);
             if($articles){
-            return redirect()->route("home");
+                $tag = Tags::get();
+            return view ("Tag&control.alltags")->with('data',$tag);
+            // return redirect()->route("Tag&control.alltags");
+
             }
             else{dd($articles);
             }
 
-        return redirect("Tag&control.tag");
+        return redirect()->route("Tag&control.tag");
 
     }
     public static function postCat(Request $request,$id=null){
         $tag = $request->all();
-        dd($tag);
+        // dd($tag);
         $validator = Validator::make($tag, [
             'name' => 'required|string|max:255',
         ]);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        unset($tag['_tocken']);
-        $articles = Articles::updateOrCreate(["id"=>$id],$tag);
+
+        $articles = Categories::updateOrCreate(["id"=>$id],$tag);
             if($articles){
             return redirect()->route("home");
             }
@@ -59,4 +64,27 @@ class TandC extends Controller
 
         return view("Tag&control.cate");
     }
+
+     public function allTags(){
+        $alltags = Tags::get();
+
+        return view("Tag&control.alltags")->with('data',$alltags);
+     }
+
+     public function delete($id){
+
+        if($id){
+
+        $tag = Tags::find($id);
+        $tag->delete();
+        $tag = Tags::get();
+        return view ("Tag&control.alltags")->with('data',$tag);
+
+        }
+
+
+
+
+    }
+
 }
