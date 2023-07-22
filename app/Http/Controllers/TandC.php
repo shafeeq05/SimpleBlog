@@ -47,8 +47,8 @@ class TandC extends Controller
         $articles = Tags::updateOrCreate(["id"=>$id],$tag);
             if($articles){
                 $tag = Tags::get();
-            return view ("Tag.alltags")->with('data',$tag);
-            // return redirect()->route("Tag&control.alltags");
+            // return view ("Tag.alltags")->with('data',$tag);
+            return redirect()->back()->with('alert', 'data added');
 
             }
             else{dd($articles);
@@ -69,7 +69,7 @@ class TandC extends Controller
 
         $articles = Categories::updateOrCreate(["id"=>$id],$category);
             if($articles){
-            return redirect()->route("home");
+            return redirect()->back()->with('alert', 'data added');
             }
             else{dd($articles);
             }
@@ -89,20 +89,32 @@ class TandC extends Controller
         return view("Categories.allcategory")->with('data',$category);
      }
 
-     public static function delete($id){
+     public static function deleteTag($id){
 
         if($id){
 
         $tag = Tags::find($id);
         $tag->delete();
         $tag = Tags::get();
-        return view ("Tag.tag")->with('data',$tag);
+        return redirect()->back();
         // return redirect()->route("tag");
 
         }
 
+    }
+    public static function deleteCat($id){
 
+        if($id){
 
+        $categorie = Categories::find($id);
+        $categorie->delete();
+        $categorie = Tags::get();
+        return redirect()->back();
+
+        // return view ("Categories.cate")->with('data',$categorie);
+        // return redirect()->route("tag");
+
+        }
 
     }
 

@@ -41,7 +41,7 @@ Route::get('/tags/{id?}',[App\Http\Controllers\TandC::class,'getTag']);
 
 Route::post('/tags/{id?}',[App\Http\Controllers\TandC::class,'postTag']);
 
-Route::get('/delete/{id?}',[App\Http\Controllers\TandC::class,'delete']);
+Route::get('/deletetag/{id?}',[App\Http\Controllers\TandC::class,'deleteTag']);
 
 Route::get('/alltags',[App\Http\Controllers\TandC::class,'allTags']);
 
@@ -52,4 +52,6 @@ Route::post('/category/{id?}',[App\Http\Controllers\TandC::class,'postCat']);
 Route::get('/category/{id?}',[App\Http\Controllers\TandC::class,'getCat']);
 
 Route::get('/allcategory',[App\Http\Controllers\TandC::class,'allCategory']);
+
+Route::get('/deletecate/{id?}',[App\Http\Controllers\TandC::class,'deleteCat']);
 
